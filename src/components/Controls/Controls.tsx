@@ -11,7 +11,7 @@ type ControllersProps = {
   stopAudio: (element: HTMLAudioElement) => void;
 };
 
-const Controllers: React.FC<ControllersProps> = (props) => {
+const Controls: React.FC<ControllersProps> = (props) => {
   const dispatch = usePomodoroDispatch();
   const timeLeft = useSelector((state: RootState) => state.timeLeft);
   const timerIsRunning = useSelector(
@@ -30,7 +30,7 @@ const Controllers: React.FC<ControllersProps> = (props) => {
   const audioElement = document.getElementById("beep") as HTMLAudioElement;
 
   return (
-    <div>
+    <section>
       <button
         id="start_stop"
         type="button"
@@ -48,8 +48,8 @@ const Controllers: React.FC<ControllersProps> = (props) => {
       >
         Reset
       </button>
-    </div>
+    </section>
   );
 };
 
-export default Controllers;
+export default Controls;

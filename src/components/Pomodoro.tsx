@@ -1,5 +1,5 @@
 import React from "react";
-import Controllers from "./Controllers/Controllers";
+import Controls from "./Controls/Controls";
 import Settings from "./Settings/Settings";
 import Timer from "./Timer/Timer";
 
@@ -19,7 +19,7 @@ export const Pomodoro = () => {
     <main>
       <Settings />
       <Timer playAudio={playAudio}></Timer>
-      <Controllers stopAudio={stopAudio} />
+      <Controls stopAudio={stopAudio} />
     </main>
   );
 };

@@ -1,0 +1,11 @@
+@import "../base/variables";
+
+.break-active {
+  color: $break-font-color;
+  border-color: $break-font-color;
+}
+
+.timer-low {
+  color: $low-timer-color;
+  border-color: $low-timer-color;
+}

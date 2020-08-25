@@ -1,3 +1,4 @@
+import { ActionCreatorWithoutPayload } from "@reduxjs/toolkit";
 import React from "react";
 import { useSelector } from "react-redux";
 import { RootState, usePomodoroDispatch } from "../../store";
@@ -11,7 +12,14 @@ import {
 const Settings = () => {
   const breakLength = useSelector((state: RootState) => state.breakLength);
   const sessionLength = useSelector((state: RootState) => state.sessionLength);
+  const timerRunning = useSelector((state: RootState) => state.timerIsRunning);
   const dispatch = usePomodoroDispatch();
+
+  const handleClickEvents = (action: ActionCreatorWithoutPayload) => {
+    if (!timerRunning) {
+      dispatch(action());
+    }
+  };
 
   return (
     <section className="Settings">
@@ -20,7 +28,7 @@ const Settings = () => {
         <button
           id="break-decrement"
           type="button"
-          onClick={() => dispatch(decrementBreakLength())}
+          onClick={() => handleClickEvents(decrementBreakLength)}
         >
           Decrement
         </button>
@@ -28,17 +36,17 @@ const Settings = () => {
         <button
           id="break-increment"
           type="button"
-          onClick={() => dispatch(incrementBreakLength())}
+          onClick={() => handleClickEvents(incrementBreakLength)}
         >
           Increment
         </button>
       </div>
-      <div className="setting">
+      <div className="Setting">
         <h1 id="session-label">Session Length</h1>
         <button
           id="session-decrement"
           type="button"
-          onClick={() => dispatch(decrementSessionLength())}
+          onClick={() => handleClickEvents(decrementSessionLength)}
         >
           Decrement
         </button>
@@ -46,7 +54,7 @@ const Settings = () => {
         <button
           id="session-increment"
           type="button"
-          onClick={() => dispatch(incrementSessionLength())}
+          onClick={() => handleClickEvents(incrementSessionLength)}
         >
           Increment
         </button>

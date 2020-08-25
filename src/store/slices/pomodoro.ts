@@ -4,12 +4,18 @@ type PomodoroState = {
   sessionLength: number;
   breakLength: number;
   timeLeft: number;
+  timerIsRunning: boolean;
+  breakActive: boolean;
 };
 
+const initialSessionLength: PomodoroState["sessionLength"] = 25;
+
 const initialState: PomodoroState = {
-  sessionLength: 25,
+  sessionLength: initialSessionLength,
   breakLength: 5,
-  timeLeft: 25,
+  timeLeft: initialSessionLength * 60,
+  timerIsRunning: false,
+  breakActive: false,
 };
 
 const pomodoro = createSlice({
@@ -21,16 +27,45 @@ const pomodoro = createSlice({
     },
     resetTimer: (state) => initialState,
     incrementSessionLength(state) {
-      state.sessionLength = state.sessionLength + 1;
+      if (state.sessionLength < 60) {
+        state.sessionLength = state.sessionLength + 1;
+      } else console.log("Can't set a timer above 60 minutes");
+      if (!state.breakActive) {
+        state.timeLeft = state.sessionLength * 60;
+      }
     },
     decrementSessionLength(state) {
-      state.sessionLength = state.sessionLength - 1;
+      if (state.sessionLength > 1) {
+        state.sessionLength = state.sessionLength - 1;
+      } else console.log("Can't set a timer below 1 minutes");
+      if (!state.breakActive) {
+        state.timeLeft = state.sessionLength * 60;
+      }
     },
     incrementBreakLength(state) {
-      state.breakLength = state.breakLength + 1;
+      if (state.breakLength < 60) {
+        state.breakLength = state.breakLength + 1;
+      } else console.log("Can't set a break time above 60 minutes");
+      if (state.breakActive) {
+        state.timeLeft = state.breakLength * 60;
+      }
     },
     decrementBreakLength(state) {
-      state.breakLength = state.breakLength - 1;
+      if (state.breakLength > 1) {
+        state.breakLength = state.breakLength - 1;
+      } else console.log("Can't set a break time below 1 minutes");
+      if (state.breakActive) {
+        state.timeLeft = state.breakLength * 60;
+      }
+    },
+    toggleTimer(state) {
+      state.timerIsRunning = !state.timerIsRunning;
+    },
+    toggleBreak(state) {
+      state.breakActive = !state.breakActive;
+      state.breakActive
+        ? (state.timeLeft = state.breakLength * 60)
+        : (state.timeLeft = state.sessionLength * 60);
     },
   },
 });
@@ -42,6 +77,8 @@ export const {
   decrementBreakLength,
   incrementBreakLength,
   decrementSessionLength,
+  toggleTimer,
+  toggleBreak,
 } = pomodoro.actions;
 
 export default pomodoro;

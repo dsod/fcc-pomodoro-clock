@@ -1,17 +1,19 @@
 import { ActionCreatorWithoutPayload } from "@reduxjs/toolkit";
 import React from "react";
 import { useSelector } from "react-redux";
-import { RootState, usePomodoroDispatch } from "../../store";
-import {
-  decrementBreakLength,
-  decrementSessionLength,
-  incrementBreakLength,
-  incrementSessionLength,
-} from "../../store/slices/pomodoro";
 
-const Settings = () => {
-  const breakLength = useSelector((state: RootState) => state.breakLength);
-  const sessionLength = useSelector((state: RootState) => state.sessionLength);
+import { ReactComponent as ArrowDown } from "../../assets/images/arrow-down.svg";
+import { ReactComponent as ArrowUp } from "../../assets/images/arrow-up.svg";
+import { RootState, usePomodoroDispatch } from "../../store";
+
+type SettingsProps = {
+  incrementAction: ActionCreatorWithoutPayload;
+  decementAction: ActionCreatorWithoutPayload;
+  settingType: string;
+  settingLength: RootState["breakLength"] | RootState["sessionLength"];
+};
+
+const Settings: React.FC<SettingsProps> = (props) => {
   const timerRunning = useSelector((state: RootState) => state.timerIsRunning);
   const dispatch = usePomodoroDispatch();
 
@@ -21,44 +23,31 @@ const Settings = () => {
     }
   };
 
+  const capitalizedSetting =
+    props.settingType.charAt(0).toUpperCase() + props.settingType.slice(1);
+
   return (
-    <section className="Settings">
-      <div className="Setting">
-        <h1 id="break-label">Break Length</h1>
-        <button
-          id="break-decrement"
-          type="button"
-          onClick={() => handleClickEvents(decrementBreakLength)}
-        >
-          Decrement
-        </button>
-        <div id="break-length">{breakLength}</div>
-        <button
-          id="break-increment"
-          type="button"
-          onClick={() => handleClickEvents(incrementBreakLength)}
-        >
-          Increment
-        </button>
-      </div>
-      <div className="Setting">
-        <h1 id="session-label">Session Length</h1>
-        <button
-          id="session-decrement"
-          type="button"
-          onClick={() => handleClickEvents(decrementSessionLength)}
-        >
-          Decrement
-        </button>
-        <div id="session-length">{sessionLength}</div>
-        <button
-          id="session-increment"
-          type="button"
-          onClick={() => handleClickEvents(incrementSessionLength)}
-        >
-          Increment
-        </button>
-      </div>
+    <section
+      className={`${capitalizedSetting} ${
+        timerRunning ? "setting-inactive" : ""
+      }`}
+    >
+      <h4 id={`${props.settingType}-label`}>{capitalizedSetting}</h4>
+      <button
+        id={`${props.settingType}-increment`}
+        type="button"
+        onClick={() => handleClickEvents(props.incrementAction)}
+      >
+        <ArrowUp />
+      </button>
+      <h2 id={`${props.settingType}-length`}>{props.settingLength}</h2>
+      <button
+        id={`${props.settingType}-decrement`}
+        type="button"
+        onClick={() => handleClickEvents(props.decementAction)}
+      >
+        <ArrowDown />
+      </button>
     </section>
   );
 };

@@ -34,11 +34,15 @@ const Timer: React.FC<TimerProps> = (props) => {
   }, [timeLeft]);
 
   return (
-    <section>
-      <h1 id="timer-label">{breakActive ? "Break" : "Session"}</h1>
-      <h1 className="jumbo-text" id="time-left">
+    <section
+      className={`Timer ${breakActive ? "break-active" : ""} 
+      ${timeLeft < 60 ? "timer-low" : ""}`}
+    >
+      <h3 id="timer-label">{breakActive ? "Break" : "Session"}</h3>
+      <h1 className="timer-text" id="time-left">
         {timeLeftText()}
       </h1>
+      <div className="flex-row"></div>
       <audio src="./audio/alarm.wav" id="beep" />
     </section>
   );

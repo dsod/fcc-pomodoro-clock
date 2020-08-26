@@ -1,0 +1,38 @@
+@import "../base/variables";
+
+.Break,
+.Session {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+
+  & button {
+    margin: 20px 0px;
+  }
+
+  &.setting-inactive {
+    border-color: $break-color !important;
+
+    & h1,
+    h2,
+    h3,
+    h4,
+    p {
+      color: $break-color;
+    }
+
+    & svg {
+      stroke: $break-color;
+    }
+  }
+
+  & svg {
+    stroke: $main-color;
+    stroke-width: 2px;
+    stroke-linejoin: round;
+  }
+
+  & svg:hover {
+    stroke: $break-color;
+  }
+}

@@ -11,7 +11,7 @@ div {
   font-family: "Kanit", sans-serif;
   font-display: swap;
   font-weight: 300;
-  color: $main-font-color;
+  color: $main-color;
 }
 
 h1 {
@@ -20,6 +20,7 @@ h1 {
 }
 h2 {
   font-size: $font-size-3;
+  font-weight: 400;
 }
 
 h3 {

@@ -1,0 +1,28 @@
+@import "../base/variables";
+
+.Timer {
+  height: 500px;
+  width: 500px;
+  margin: 40px;
+  border: 2px solid $main-color;
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+  flex-flow: row wrap;
+  text-align: center;
+  align-content: center;
+
+  & .flex-row {
+    height: 40px;
+  }
+}
+
+#timer-label {
+  flex-basis: 100%;
+  flex-shrink: 1;
+}
+
+#time-left {
+  flex-basis: 100%;
+  flex-shrink: 1;
+}

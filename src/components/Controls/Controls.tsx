@@ -6,6 +6,8 @@ import {
   resetTimer,
   toggleTimer,
 } from "../../store/slices/pomodoro";
+import { ReactComponent as StartPauseButton } from "../../assets/images/start_pause.svg";
+import { ReactComponent as ResetButton } from "../../assets/images/reset.svg";
 
 type ControllersProps = {
   stopAudio: (element: HTMLAudioElement) => void;
@@ -30,13 +32,13 @@ const Controls: React.FC<ControllersProps> = (props) => {
   const audioElement = document.getElementById("beep") as HTMLAudioElement;
 
   return (
-    <section>
+    <section className="Controls">
       <button
         id="start_stop"
         type="button"
         onClick={() => dispatch(toggleTimer())}
       >
-        Play / Pause
+        <StartPauseButton />
       </button>
       <button
         id="reset"
@@ -46,7 +48,7 @@ const Controls: React.FC<ControllersProps> = (props) => {
           props.stopAudio(audioElement);
         }}
       >
-        Reset
+        <ResetButton />
       </button>
     </section>
   );
